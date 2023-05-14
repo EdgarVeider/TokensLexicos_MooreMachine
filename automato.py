@@ -15,14 +15,17 @@ moore = Moore(estados,
               {
                 #ESTADO INICIAL
                 'q0':{
-                    'i' : 'INT-i',          #int
-                    'v' : 'VOID_V',         #VOID
-                    'r' : 'RETURN_R',       #return
-                    ' ' : 'q0',             #FICA EM LOOP 
-                    '}' : 'RBRACES',        #RBRACES
-                    'f' : 'FLOAT_F',        #FLOAT
-                    ')' : 'LPAREN',         #LPAREN
-                    '=' : 'ATTRIBUTION',    #ATTRIBUTION
+                    'i'  : 'INT-i',          #int
+                    'v'  : 'VOID_V',         #VOID
+                    'r'  : 'RETURN_R',       #return
+                    ' '  : 'q0',             #FICA EM LOOP 
+                    '}'  : 'RBRACES',        #RBRACES
+                    'f'  : 'FLOAT_F',        #FLOAT
+                    ')'  : 'LPAREN',         #LPAREN
+                    '='  : 'ATTRIBUTION',    #ATTRIBUTION
+                    '<'  : 'LESS',
+                    '>'  : 'GREATER',
+                    '==' : 'EQUALS',
 
                     'a' : 'ID',
                     'b' : 'ID',
@@ -45,6 +48,17 @@ moore = Moore(estados,
                     'w' : 'ID', 
                     'y' : 'ID', 
                     'z' : 'ID', 
+
+                    '0' : 'NUMBER',
+                    '1' : 'NUMBER',
+                    '2' : 'NUMBER', 
+                    '3' : 'NUMBER',
+                    '4' : 'NUMBER',
+                    '5' : 'NUMBER',
+                    '6' : 'NUMBER',
+                    '7' : 'NUMBER',
+                    '8' : 'NUMBER',
+                    '9' : 'NUMBER',
                 },
 
                 #------------------F L O A T-------------------------
@@ -233,6 +247,8 @@ moore = Moore(estados,
                 #------------------I N T-------------------------
                 'INT-i':{
                     'n' : 'INT-n',
+                    ' ' : 'ID*',
+                    
 
                     'a' : 'ID',
                     'b' : 'ID',
@@ -263,6 +279,7 @@ moore = Moore(estados,
 
                 'INT-n':{
                     't' : 'INT-t',
+                    ' ' : 'ID*',
 
                     'a' : 'ID',
                     'b' : 'ID',
@@ -330,7 +347,8 @@ moore = Moore(estados,
                     'e' : 'ID',
                     'f' : 'ID',
                     'g' : 'ID',
-                    'h' : 'ID', 
+                    'h' : 'ID',
+                    'i' : 'ID', 
                     'j' : 'ID', 
                     'k' : 'ID', 
                     'l' : 'ID', 
@@ -376,18 +394,37 @@ moore = Moore(estados,
                     'v' : 'ID', 
                     'w' : 'ID', 
                     'y' : 'ID', 
-                    'z' : 'ID', 
+                    'z' : 'ID',
+
+                    '0' : 'ID',
+                    '1' : 'ID',
+                    '2' : 'ID', 
+                    '3' : 'ID',
+                    '4' : 'ID',
+                    '5' : 'ID',
+                    '6' : 'ID',
+                    '7' : 'ID',
+                    '8' : 'ID',
+                    '9' : 'ID',
+
 
                     ' ' : 'ID*',
                     '(' : 'ID_LPAREN',
                     ',' : 'ID_COMMA',
                     ')' : 'ID_RPAREN',
+                    ';' : 'ID_SEMICOLON',
+                },
+
+                'ID_SEMICOLON': {
+                    'f': 'FOR_F',
+                    ' ': 'q0',
                 },
 
                 'ID_RPAREN': {
                     ' ' : 'q0',
                     ';' : 'SEMICOLON',
-                    '{' : 'RBRACES'
+                    '{' : 'RBRACES',
+                    ')' : 'RPAREN',
                 },
 
                 'ID_LPAREN':{
@@ -395,6 +432,29 @@ moore = Moore(estados,
                     'i': 'INT-i',
                     ')': 'LPAREN',
                     'f' : 'FLOAT_F',
+
+                    'a' : 'ID',
+                    'b' : 'ID',
+                    'c' : 'ID',
+                    'd' : 'ID',
+                    'e' : 'ID',
+                    'g' : 'ID',
+                    'h' : 'ID', 
+                    'j' : 'ID', 
+                    'k' : 'ID', 
+                    'l' : 'ID', 
+                    'm' : 'ID', 
+                    'n' : 'ID',
+                    'o' : 'ID', 
+                    'p' : 'ID', 
+                    'q' : 'ID', 
+                    'r' : 'ID', 
+                    's' : 'ID', 
+                    't' : 'ID', 
+                    'u' : 'ID', 
+                    'w' : 'ID', 
+                    'y' : 'ID', 
+                    'z' : 'ID',
 
                     '0' : "NUMBER",
                     '1' : "NUMBER",
@@ -423,7 +483,10 @@ moore = Moore(estados,
                     '+': 'PLUS',
                     '-': 'MINUS',
                     '*': 'TIMES',
-                    '=': 'ATTRIBUTION'
+                    '=': 'ATTRIBUTION',
+                    ',': 'ID_COMMA',
+                    '<': 'LESS',
+                    '>': 'GRAETER',
                 },
 
             #---------------------S I N A I S-------------------------
@@ -441,6 +504,7 @@ moore = Moore(estados,
 
             'ATTRIBUTION': {
                 ' ' : 'q0',
+                '=' : 'EQUALS'
             },
 
             'COMMA': {
@@ -455,6 +519,25 @@ moore = Moore(estados,
                 '8' : "NUMBER",
                 '9' : "NUMBER",
             },
+
+            'LESS':{
+                ' ': 'LESS_*',
+                '=': 'LESS_EQUAL'
+            },
+
+            'LESS_EQUAL': {
+                ' ': 'q0',
+            },
+
+            'GREATER':{
+                ' ': 'GREATER_*',
+                '=': '_EQUAL'
+            },
+
+            'EQUALS':{
+                ' ': 'q0',
+            },
+
 
             #---------------------P A R E N-------------------------
 
@@ -828,6 +911,49 @@ moore = Moore(estados,
 
                 },
 
+                'RETURN_*': {
+                    ' ' : 'q0',
+                    
+                    'a' : 'ID',
+                    'b' : 'ID',
+                    'c' : 'ID',
+                    'd' : 'ID',
+                    'e' : 'ID',
+                    'f' : 'ID',
+                    'g' : 'ID',
+                    'h' : 'ID', 
+                    'i' : 'ID', 
+                    'j' : 'ID', 
+                    'k' : 'ID', 
+                    'l' : 'ID', 
+                    'm' : 'ID', 
+                    'n' : 'ID',
+                    'o' : 'ID',
+                    'p' : 'ID', 
+                    'q' : 'ID', 
+                    'r' : 'ID', 
+                    's' : 'ID', 
+                    't' : 'ID', 
+                    'u' : 'ID', 
+                    'v' : 'ID', 
+                    'w' : 'ID', 
+                    'y' : 'ID',
+                    'x' : 'ID', 
+                    'z' : 'ID',
+
+                    '0' : "NUMBER",
+                    '1' : "NUMBER",
+                    '2' : "NUMBER",
+                    '3' : "NUMBER",
+                    '4' : "NUMBER",
+                    '5' : "NUMBER",
+                    '6' : "NUMBER",
+                    '7' : "NUMBER",
+                    '8' : "NUMBER",
+                    '9' : "NUMBER",
+                    '.' : 'NUMBER',
+                },
+
             #------------------NUMBER-------------------------
 
                 'NUMBER':{
@@ -845,6 +971,11 @@ moore = Moore(estados,
                     
                     ')' : "NUMBER_RPAREN",
                     ',' : "NUMBER_COMMA",
+                    ';' : "NUMBER_SEMICOLON"
+                },
+
+                'NUMBER_SEMICOLON': {
+                    ' ' : 'q0',
                 },
 
                 'NUMBER_COMMA':{
@@ -858,10 +989,13 @@ moore = Moore(estados,
                     '7' : "NUMBER",
                     '8' : "NUMBER",
                     '9' : "NUMBER",
+
+                    ' ' : 'q0'
                 },
 
                 'NUMBER_RPAREN':{
                     ';' : "SEMICOLON",
+                    '{' : 'LBRACES'
                 },
 
             #------------------S E M I C O L O N-------------------------
@@ -883,11 +1017,129 @@ moore = Moore(estados,
                 },
 
                 'RPAREN':{
-
+                    ';': 'SEMICOLON'
+                },
+            #------------------F O R-------------------------------
+                'FOR_F': {
+                    'o' : 'FOR_O',
+                    
+                    'a' : 'ID',
+                    'b' : 'ID',
+                    'c' : 'ID',
+                    'd' : 'ID',
+                    'e' : 'ID',
+                    'f' : 'ID',
+                    'g' : 'ID',
+                    'h' : 'ID', 
+                    'i' : 'ID', 
+                    'j' : 'ID', 
+                    'k' : 'ID', 
+                    'l' : 'ID', 
+                    'm' : 'ID', 
+                    'n' : 'ID',
+                    'p' : 'ID', 
+                    'q' : 'ID', 
+                    'r' : 'ID', 
+                    's' : 'ID', 
+                    't' : 'ID', 
+                    'u' : 'ID', 
+                    'v' : 'ID', 
+                    'w' : 'ID', 
+                    'y' : 'ID',
+                    'x' : 'ID', 
+                    'z' : 'ID',
                 },
 
+                'FOR_O': {
+                    'r' : 'FOR_R',
+                    
+                    'a' : 'ID',
+                    'b' : 'ID',
+                    'c' : 'ID',
+                    'd' : 'ID',
+                    'e' : 'ID',
+                    'f' : 'ID',
+                    'g' : 'ID',
+                    'h' : 'ID', 
+                    'i' : 'ID', 
+                    'j' : 'ID', 
+                    'k' : 'ID', 
+                    'l' : 'ID', 
+                    'm' : 'ID', 
+                    'n' : 'ID',
+                    'o' : 'ID',
+                    'p' : 'ID', 
+                    'q' : 'ID', 
+                    's' : 'ID', 
+                    't' : 'ID', 
+                    'u' : 'ID', 
+                    'v' : 'ID', 
+                    'w' : 'ID', 
+                    'y' : 'ID',
+                    'x' : 'ID', 
+                    'z' : 'ID',
+                },
 
-              },
+                'FOR_R': {
+                    '(' : 'FOR_LPAREN',
+                    
+                    'a' : 'ID',
+                    'b' : 'ID',
+                    'c' : 'ID',
+                    'd' : 'ID',
+                    'e' : 'ID',
+                    'f' : 'ID',
+                    'g' : 'ID',
+                    'h' : 'ID', 
+                    'i' : 'ID', 
+                    'j' : 'ID', 
+                    'k' : 'ID', 
+                    'l' : 'ID', 
+                    'm' : 'ID', 
+                    'n' : 'ID',
+                    'o' : 'ID',
+                    'p' : 'ID', 
+                    'q' : 'ID', 
+                    'r' : 'ID', 
+                    's' : 'ID', 
+                    't' : 'ID', 
+                    'u' : 'ID', 
+                    'v' : 'ID', 
+                    'w' : 'ID', 
+                    'y' : 'ID',
+                    'x' : 'ID', 
+                    'z' : 'ID',
+                },
+
+                'FOR_LPAREN':{
+                    'a' : 'ID',
+                    'b' : 'ID',
+                    'c' : 'ID',
+                    'd' : 'ID',
+                    'e' : 'ID',
+                    'f' : 'ID',
+                    'g' : 'ID',
+                    'h' : 'ID', 
+                    'i' : 'ID', 
+                    'j' : 'ID', 
+                    'k' : 'ID', 
+                    'l' : 'ID', 
+                    'm' : 'ID', 
+                    'n' : 'ID',
+                    'o' : 'ID',
+                    'p' : 'ID', 
+                    'q' : 'ID', 
+                    'r' : 'ID', 
+                    's' : 'ID', 
+                    't' : 'ID', 
+                    'u' : 'ID', 
+                    'v' : 'ID', 
+                    'w' : 'ID', 
+                    'y' : 'ID',
+                    'x' : 'ID', 
+                    'z' : 'ID',
+                },
+            },
 
 
 
@@ -901,6 +1153,7 @@ moore = Moore(estados,
                 'ID_COMMA': "ID\nCOMMA\n",
                 'ID_RPAREN': "ID\nRPAREN\n",
                 'ID_LPAREN' : "ID\nLPAREN\n",
+                'ID_SEMICOLON' : "ID\nSEMICOLON\n",
                 'LPAREN' : "LPAREN\n",
                 'VOID_)': "VOID\nRPAREN",
                 'VOID_RPAREN_LBRACES':"VOID\nRPAREN\nLBRACES\n",
@@ -916,7 +1169,14 @@ moore = Moore(estados,
                 'ATTRIBUTION' : 'ATTRIBUTION\n',
                 'RPAREN' : "RPAREN\n",
                 'NUMBER_COMMA' : "NUMBER\nCOMMA\n",
+                'FOR_LPAREN' : "FOR\nLPAREN\n",
                 'RBRACES': "RBRACES\n",
+                'LESS_*' : "LESS\n",
+                'GREATER_*' : "GREATER\n",
+                'EQUALS' : "EQUALS\n",
+                'LESS_EQUAL' : "LESS_EQUAL\n",
+                'NUMBER_SEMICOLON' : "NUMBER\nSEMICOLON\n",
+                'LBRACES' : "LBRACES\n",
 
 
                 'q0'   : "",
@@ -940,10 +1200,14 @@ moore = Moore(estados,
                 'FLOAT_O':"",
                 'FLOAT_A':"",
                 'FLOAT_T':"",
+                'FOR_F':"",
+                'FOR_O':"",
+                'FOR_R':"",  
+                'LESS':"",
+                'GREATER':"",              
               }
               )
 
 
 
-print(moore.get_output_from_string('int fib(int n){  int '))
-
+print(moore.get_output_from_string('int fib(int n){  int i, fib1 = 1, soma;for(i = 3; i <= n; i = i + 1){  soma = fib1 + fib2; fib1 = fib2;  fib2 = soma; } return fib; }int main(void){    int n = 10;    int res = fib(n));    return 0;'))
