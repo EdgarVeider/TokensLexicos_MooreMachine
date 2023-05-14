@@ -45,6 +45,17 @@ moore = Moore(estados,
                     'w' : 'ID', 
                     'y' : 'ID', 
                     'z' : 'ID', 
+
+                    '0' : 'NUMBER',
+                    '1' : 'NUMBER',
+                    '2' : 'NUMBER', 
+                    '3' : 'NUMBER',
+                    '4' : 'NUMBER',
+                    '5' : 'NUMBER',
+                    '6' : 'NUMBER',
+                    '7' : 'NUMBER',
+                    '8' : 'NUMBER',
+                    '9' : 'NUMBER',
                 },
 
                 #------------------F L O A T-------------------------
@@ -330,7 +341,8 @@ moore = Moore(estados,
                     'e' : 'ID',
                     'f' : 'ID',
                     'g' : 'ID',
-                    'h' : 'ID', 
+                    'h' : 'ID',
+                    'i' : 'ID', 
                     'j' : 'ID', 
                     'k' : 'ID', 
                     'l' : 'ID', 
@@ -376,12 +388,29 @@ moore = Moore(estados,
                     'v' : 'ID', 
                     'w' : 'ID', 
                     'y' : 'ID', 
-                    'z' : 'ID', 
+                    'z' : 'ID',
+
+                    '0' : 'ID',
+                    '1' : 'ID',
+                    '2' : 'ID', 
+                    '3' : 'ID',
+                    '4' : 'ID',
+                    '5' : 'ID',
+                    '6' : 'ID',
+                    '7' : 'ID',
+                    '8' : 'ID',
+                    '9' : 'ID',
+
 
                     ' ' : 'ID*',
                     '(' : 'ID_LPAREN',
                     ',' : 'ID_COMMA',
                     ')' : 'ID_RPAREN',
+                    ';' : 'ID_SEMICOLON',
+                },
+
+                'ID_SEMICOLON': {
+                    
                 },
 
                 'ID_RPAREN': {
@@ -423,7 +452,8 @@ moore = Moore(estados,
                     '+': 'PLUS',
                     '-': 'MINUS',
                     '*': 'TIMES',
-                    '=': 'ATTRIBUTION'
+                    '=': 'ATTRIBUTION',
+                    ',': 'ID_COMMA'
                 },
 
             #---------------------S I N A I S-------------------------
@@ -858,6 +888,8 @@ moore = Moore(estados,
                     '7' : "NUMBER",
                     '8' : "NUMBER",
                     '9' : "NUMBER",
+
+                    ' ' : 'q0'
                 },
 
                 'NUMBER_RPAREN':{
@@ -901,6 +933,7 @@ moore = Moore(estados,
                 'ID_COMMA': "ID\nCOMMA\n",
                 'ID_RPAREN': "ID\nRPAREN\n",
                 'ID_LPAREN' : "ID\nLPAREN\n",
+                'ID_SEMICOLON' : "ID\nSEMICOLON\n",
                 'LPAREN' : "LPAREN\n",
                 'VOID_)': "VOID\nRPAREN",
                 'VOID_RPAREN_LBRACES':"VOID\nRPAREN\nLBRACES\n",
@@ -945,5 +978,5 @@ moore = Moore(estados,
 
 
 
-print(moore.get_output_from_string('int fib(int n){  int '))
+print(moore.get_output_from_string('int fib(int n){  int i, fib1 = 1, soma;'))
 
