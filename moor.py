@@ -1,4 +1,6 @@
 from automata.fa.Moore import Moore
+from read_file import FileOpen
+import sys
 
 estados = ['q0', 'INT-i', 'INT-n', 'INT-t', 'INT-*',
            'FLOAT_F', 'FLOAT_L', 'FLOAT_O', 'FLOAT_A', 'FLOAT_T', 'FLOAT_*',
@@ -23,6 +25,7 @@ moore = Moore(estados,
                     '{'  : 'LBRACES',       #LBRACES
                     'f'  : 'FLOAT_F',       #FLOAT
                     '('  : 'LPAREN',        #LPAREN
+                    ')'  : 'RPAREN',
                     '='  : 'ATTRIBUTION',   #ATTRIBUTION
                     '<'  : 'LESS',
                     '>'  : 'GREATER',
@@ -66,6 +69,7 @@ moore = Moore(estados,
                 #------------------F L O A T-------------------------
                 'FLOAT_F':{
                     'l' : 'FLOAT_L',
+                    'o' : 'FOR_O',
                     
                     'a' : 'ID',
                     'b' : 'ID',
@@ -80,7 +84,6 @@ moore = Moore(estados,
                     'k' : 'ID', 
                     'm' : 'ID',
                     'n' : 'ID',
-                    'o' : 'ID', 
                     'p' : 'ID', 
                     'q' : 'ID', 
                     'r' : 'ID', 
@@ -420,6 +423,7 @@ moore = Moore(estados,
                 'ID_SEMICOLON': {
                     'f': 'FOR_F',
                     ' ': 'q0',
+                    '}': 'RBRACES'
                 },
 
                 'ID_RPAREN': {
@@ -516,7 +520,8 @@ moore = Moore(estados,
                 'e' : 'ID',
                 'f' : 'ID',
                 'g' : 'ID',
-                'h' : 'ID', 
+                'h' : 'ID',
+                'i' : 'ID', 
                 'j' : 'ID', 
                 'k' : 'ID', 
                 'l' : 'ID', 
@@ -591,6 +596,7 @@ moore = Moore(estados,
                     'g' : 'ID',
                     'h' : 'ID', 
                     'j' : 'ID', 
+                    'i' : 'ID',
                     'k' : 'ID', 
                     'l' : 'ID', 
                     'm' : 'ID', 
@@ -909,6 +915,7 @@ moore = Moore(estados,
 
                 'ELSE_E2':{
                     ' ' : 'ELSE_*',
+                    '{' : 'ELSE_LBRACES',
                     
                     'a' : 'ID',
                     'b' : 'ID',
@@ -961,6 +968,10 @@ moore = Moore(estados,
                     'x' : 'ID', 
                     'y' : 'ID', 
                     'z' : 'ID',
+                },
+
+                'ELSE_LBRACES':{
+                    ' ' : 'q0'
                 },
 
 
@@ -1178,6 +1189,7 @@ moore = Moore(estados,
 
                 'RETURN_*': {
                     ' ' : 'q0',
+                    '(' : 'RPAREN',
                     
                     'a' : 'ID',
                     'b' : 'ID',
@@ -1237,7 +1249,7 @@ moore = Moore(estados,
                     ')' : "NUMBER_RPAREN",
                     ',' : "NUMBER_COMMA",
                     ';' : "NUMBER_SEMICOLON",
-                    ' ' : "q0",
+                    ' ' : "NUMBER_*",
                 },
 
                 'NUMBER_SEMICOLON': {
@@ -1266,6 +1278,10 @@ moore = Moore(estados,
                     ' ' : 'q0',
                 },
 
+                'NUMBER_*':{
+                    ')': 'RPAREN'
+                },
+
             #------------------S E M I C O L O N-------------------------
 
                 'SEMICOLON':{
@@ -1278,6 +1294,7 @@ moore = Moore(estados,
                 'RBRACES':{
                     'i' : 'INT-i',
                     ' ' : 'q0',
+                    '}' : 'RBRACES'
                 },
 
                 'LBRACES':{
@@ -1285,7 +1302,19 @@ moore = Moore(estados,
                 },
 
                 'RPAREN':{
-                    ';': 'SEMICOLON'
+                    ';': 'SEMICOLON',
+                    ' ': 'q0',
+
+                    '0' : "NUMBER",
+                    '1' : "NUMBER",
+                    '2' : "NUMBER",
+                    '3' : "NUMBER",
+                    '4' : "NUMBER",
+                    '5' : "NUMBER",
+                    '6' : "NUMBER",
+                    '7' : "NUMBER",
+                    '8' : "NUMBER",
+                    '9' : "NUMBER",
                 },
             #------------------F O R-------------------------------
                 'FOR_F': {
@@ -1350,6 +1379,7 @@ moore = Moore(estados,
 
                 'FOR_R': {
                     '(' : 'FOR_LPAREN',
+                    ' ' : 'FOR_*',
                     
                     'a' : 'ID',
                     'b' : 'ID',
@@ -1377,6 +1407,11 @@ moore = Moore(estados,
                     'y' : 'ID',
                     'x' : 'ID', 
                     'z' : 'ID',
+
+                },
+
+                'FOR_*':{
+                    '(' : 'LPAREN'
                 },
 
                 'FOR_LPAREN':{
@@ -1447,6 +1482,9 @@ moore = Moore(estados,
                 'LBRACES' : "LBRACES\n",
                 'IF_*': 'IF\n',
                 'ELSE_*': 'ELSE\n',
+                'NUMBER_*': 'NUMBER\n',
+                'ELSE_LBRACES': 'ELSE\nLBRACES\n',
+                'FOR_*' : 'FOR\n',
 
 
                 'q0'   : "",
@@ -1487,4 +1525,11 @@ moore = Moore(estados,
 
 
 
-print(moore.get_output_from_string('int fib(int n) {    if (n == 2) return 1;        else return fib(n - 1) + fib(n - 2);}int main(void){    int n;    n = 10;    int res = fib(n);    return 0;}'))
+args = sys.argv
+file = str(args[1])
+argument = FileOpen.read_file(file)
+
+print(moore.get_output_from_string(argument))
+
+
+
