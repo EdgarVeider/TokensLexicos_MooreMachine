@@ -734,7 +734,7 @@ moore = Moore(estados,
                 },
                 
                 'VOID_)':{
-                    '{' : 'VOID_RPAREN_LBRACES'
+                    '{' : 'LBRACES'
                 },
 
                 'VOID_RPAREN_LBRACES':{
@@ -1458,7 +1458,7 @@ moore = Moore(estados,
                 'ID_LPAREN' : "ID\nLPAREN\n",
                 'ID_SEMICOLON' : "ID\nSEMICOLON\n",
                 'LPAREN' : "LPAREN\n",
-                'VOID_)': "VOID\nRPAREN",
+                'VOID_)': "VOID\nRPAREN\n",
                 'VOID_RPAREN_LBRACES':"VOID\nRPAREN\nLBRACES\n",
                 'VOID_*': "VOID\n",
                 'RETURN_*' : "RETURN\n",
